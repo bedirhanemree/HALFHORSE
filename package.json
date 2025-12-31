@@ -2,10 +2,10 @@
   "name": "halfhorse",
   "version": "1.0.0",
   "scripts": {
-    "start": "cd backend && node index.js",
-    "install": "cd backend && npm install"
+    "start": "node backend/index.js",
+    "postinstall": "cd backend && npm install"
   },
-  "dependencies": {
-    "passport-twitter": "^1.0.4"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
