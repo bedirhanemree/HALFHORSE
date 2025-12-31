@@ -45,14 +45,24 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
 }));
 
 // Serve frontend static files
-// Check if frontend exists relative to current directory or parent
+// Check multiple possible paths for frontend
 const fs = require('fs');
-let frontendPath = path.join(__dirname, '..', 'frontend');
-if (!fs.existsSync(frontendPath)) {
-    frontendPath = path.join(__dirname, 'frontend');
-}
-if (!fs.existsSync(frontendPath)) {
-    frontendPath = path.join(process.cwd(), 'frontend');
+const possiblePaths = [
+    path.join(__dirname, '..', 'frontend'),           // Local dev: backend/../frontend
+    path.join(process.cwd(), 'frontend'),             // Railway with root dir empty
+    path.join('/app', 'frontend'),                    // Railway absolute
+    path.join(__dirname, 'frontend'),                 // If frontend is inside backend
+    path.resolve(__dirname, '..', 'frontend')         // Resolved absolute
+];
+
+console.log('Setting up static file serving...');
+let frontendPath = possiblePaths[0]; // default
+for (const p of possiblePaths) {
+    console.log(`Checking path: ${p} - exists: ${fs.existsSync(p)}`);
+    if (fs.existsSync(p)) {
+        frontendPath = p;
+        break;
+    }
 }
 console.log('Frontend path:', frontendPath);
 app.use(express.static(frontendPath));
@@ -60,10 +70,11 @@ app.use(express.static(frontendPath));
 // Catch-all route to serve index.html for SPA routing
 app.get('/', (req, res) => {
     const indexPath = path.join(frontendPath, 'index.html');
+    console.log('Serving index from:', indexPath, 'exists:', fs.existsSync(indexPath));
     if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
     } else {
-        res.status(404).send('Frontend not found. Paths checked: ' + frontendPath);
+        res.status(404).send(`Frontend not found. Checked paths: ${possiblePaths.join(', ')}`);
     }
 });
 
