@@ -45,9 +45,27 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
 }));
 
 // Serve frontend static files
-const frontendPath = path.join(__dirname, '..', 'frontend');
+// Check if frontend exists relative to current directory or parent
+const fs = require('fs');
+let frontendPath = path.join(__dirname, '..', 'frontend');
+if (!fs.existsSync(frontendPath)) {
+    frontendPath = path.join(__dirname, 'frontend');
+}
+if (!fs.existsSync(frontendPath)) {
+    frontendPath = path.join(process.cwd(), 'frontend');
+}
 console.log('Frontend path:', frontendPath);
 app.use(express.static(frontendPath));
+
+// Catch-all route to serve index.html for SPA routing
+app.get('/', (req, res) => {
+    const indexPath = path.join(frontendPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        res.status(404).send('Frontend not found. Paths checked: ' + frontendPath);
+    }
+});
 
 // CORS Configuration
 app.use(cors({
