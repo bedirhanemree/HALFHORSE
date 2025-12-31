@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Gallery - Draw</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme-pumpfun.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html" class="logo-link">HALF-HORSE</a>
+            </div>
+            <nav class="main-navigation">
+                <a href="index.html" class="nav-link">Draw</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="horsecoin.html" class="nav-link">$HORSE</a>
+                <a href="rules.html" class="nav-link">Rules</a>
+            </nav>
+            <div class="user-actions">
+                <div class="user-info" id="userInfoContainer">
+                    <span id="usernameDisplay">Guest</span>
+                </div>
+                <nav class="auth-navigation" id="authNavigationContainer">
+                    <!-- Auth links will be dynamically added here by script.js -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Live Stats Dashboard -->
+    <div class="stats-dashboard">
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-paint-brush"></i></div>
+                <div class="stat-value" id="statDrawings" data-target="0">0</div>
+                <div class="stat-label">Drawings Created</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-value" id="statUsers" data-target="0">0</div>
+                <div class="stat-label">Active Artists</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fas fa-heart"></i></div>
+                <div class="stat-value" id="statLikes" data-target="0">0</div>
+                <div class="stat-label">Total Likes</div>
+            </div>
+            <div class="stat-box highlight">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-value">$3,550</div>
+                <div class="stat-label">Prize Pool</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="competition-banner-collapsible" id="competitionBannerCollapsible">
+        <div class="banner-header-clickable" id="bannerHeaderClickable" tabindex="0" role="button" aria-expanded="false"
+            aria-controls="bannerDetailsCollapsible">
+            <h3>🏆 Grand Art Challenge! $3550 Prize Pool! <i class="fas fa-chevron-down banner-chevron"></i></h3>
+        </div>
+        <div class="banner-details-collapsible" id="bannerDetailsCollapsible">
+            <div class="banner-content-wrapper">
+                <h2><i class="fas fa-trophy"></i> Grand Art Challenge! <i class="fas fa-trophy"></i></h2>
+                <p class="prize-pool">Total Prize Pool: $3550!</p>
+                <div class="prize-details">
+                    <ul>
+                        <li><strong>1st Place:</strong> $1000</li>
+                        <li><strong>2nd Place:</strong> $500</li>
+                        <li><strong>3rd Place:</strong> $250</li>
+                        <li><strong>4th - 20th Place:</strong> $100 each!</li>
+                    </ul>
+                </div>
+                <p class="competition-info">Most Likes Wins! Competition Ends: <strong
+                        id="competitionEndDate">Loading...</strong></p>
+                <div class="competition-countdown" id="competitionCountdownTimer">Loading countdown...</div>
+                <div class="competition-actions">
+                    <a href="#drawingCanvas" class="primary-btn competition-action-btn cta-draw">
+                        <i class="fas fa-paint-brush"></i> Start Drawing Now!
+                    </a>
+                    <a href="leaderboard.html" class="secondary-btn competition-action-btn cta-leaderboard">
+                        <i class="fas fa-medal"></i> View Leaderboard
+                    </a>
+                    <a href="rules.html" class="tertiary-btn competition-action-btn cta-rules">
+                        <i class="fas fa-gavel"></i> View Competition Rules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content draw-layout">
+            <div class="drawing-area">
+                <div class="horse-image">
+                    <img id="half-horse" src="assets/half-horse.png" alt="Half Horse">
+                    <canvas id="drawingCanvas"></canvas>
+                </div>
+            </div>
+            <div class="toolbar">
+                <div class="tool-section">
+                    <h4>Actions</h4>
+                    <div class="action-buttons">
+                        <button id="penBtn" class="action-btn active" title="Pen Tool">
+                            <i class="fas fa-pencil-alt"></i> Pen
+                        </button>
+                        <button id="clearBtn" class="action-btn" title="Clear Canvas">
+                            <i class="fas fa-trash-alt"></i> Clear
+                        </button>
+                        <button id="undoBtn" class="action-btn" title="Undo Last Action (Ctrl+Z)">
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                        <button id="redoBtn" class="action-btn" title="Redo Last Action (Ctrl+Y)"> <i
+                                class="fas fa-redo"></i> Redo
+                        </button>
+                        <button id="eraserBtn" class="action-btn" title="Eraser Tool">
+                            <i class="fas fa-eraser"></i> Eraser
+                        </button>
+                        <button id="fillBtn" class="action-btn" title="Paint Bucket Tool">
+                            <i class="fas fa-fill-drip"></i> Fill
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-section">
+                    <h4>Colors</h4>
+                    <div class="color-buttons">
+                        <button class="color-btn" data-color="#FF0000" style="background-color: #FF0000;"
+                            aria-label="Red"></button>
+                        <button class="color-btn" data-color="#00FF00" style="background-color: #00FF00;"
+                            aria-label="Green"></button>
+                        <button class="color-btn" data-color="#0000FF" style="background-color: #0000FF;"
+                            aria-label="Blue"></button>
+                        <button class="color-btn" data-color="#FFFF00" style="background-color: #FFFF00;"
+                            aria-label="Yellow"></button>
+                        <button class="color-btn" data-color="#FF00FF" style="background-color: #FF00FF;"
+                            aria-label="Magenta"></button>
+                        <button class="color-btn" data-color="#00FFFF" style="background-color: #00FFFF;"
+                            aria-label="Cyan"></button>
+                        <button class="color-btn" data-color="#000000" style="background-color: #000000;"
+                            aria-label="Black"></button>
+                        <button class="color-btn" data-color="#FFFFFF" style="background-color: #FFFFFF;"
+                            aria-label="White"></button>
+                    </div>
+                    <input type="color" id="colorPicker" class="custom-color-picker" aria-label="Custom Color Picker"
+                        title="Select Custom Color">
+                </div>
+                <div class="tool-section">
+                    <h4>Brush Size</h4>
+                    <div class="brush-size-controls">
+                        <button id="decreaseBrushSizeBtn" class="brush-control-btn" title="Decrease Brush Size">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="range" id="brushSize" min="1" max="50" value="5" class="brush-size-slider"
+                            aria-label="Brush Size">
+                        <button id="increaseBrushSizeBtn" class="brush-control-btn" title="Increase Brush Size">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div id="brushPreview" class="brush-preview"></div>
+                </div>
+                <button id="publishBtn" class="publish-btn">
+                    <i class="fas fa-cloud-upload-alt"></i> Publish Now!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Improved Tutorial Modal -->
+    <div id="tutorialModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content tutorial-modal">
+            <button class="modal-close-btn" id="closeTutorialBtn"><i class="fas fa-times"></i></button>
+            <h3>Welcome to Horse Gallery!</h3>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Draw and Complete</h4>
+                        <p>Use the drawing area to complete the right half of the horse. Show your creativity!</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Colors and Brushes</h4>
+                        <p>Customize your drawing with various colors and brush sizes.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Login to Publish</h4>
+                        <p>You need to log in or sign up to publish your masterpiece and share it with the community!
+                        </p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>One Chance Only!</h4>
+                        <p>Each user can publish only one drawing for the weekly competition, so make sure your drawing
+                            is complete before publishing!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tutorial-controls">
+                <button id="startDrawingBtn" class="primary-btn">Start Drawing!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Improved Publish Modal -->
+    <div id="publishModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content publish-modal">
+            <button class="modal-close-btn" id="closePublishBtn"><i class="fas fa-times"></i></button>
+            <h3>Publish Your Drawing</h3>
+            <p class="publish-warning">Warning: You can only publish one drawing per account for the weekly competition!
+            </p>
+
+            <div class="preview-container">
+                <img id="drawingPreview" src="" alt="Drawing Preview">
+                <div class="preview-controls">
+                    <button id="rotatePreviewLeftBtn" class="preview-btn"><i class="fas fa-undo"></i></button>
+                    <button id="rotatePreviewRightBtn" class="preview-btn"><i class="fas fa-redo"></i></button>
+                </div>
+            </div>
+
+            <div class="publish-form">
+                <div class="form-group">
+                    <label for="drawingTitle">Drawing Title</label>
+                    <input type="text" id="drawingTitle" class="title-input" placeholder="Give your drawing a name">
+                </div>
+                <div class="form-group">
+                    <label for="drawingTagsInput">Tags (optional)</label>
+                    <input type="text" id="drawingTagsInput" class="tags-input"
+                        placeholder="Add tags separated by commas">
+                </div>
+            </div>
+
+            <div class="publish-actions">
+                <button id="backToDrawingBtn" class="secondary-btn">Go Back</button>
+                <button id="confirmPublishBtn" class="primary-btn">Publish!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-drawings-section">
+        <div class="container">
+            <h2>Recent Drawings</h2>
+            <div id="recentDrawingsContainer" class="gallery-grid recent-gallery-grid">
+                <div class="loading-indicator">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading recent drawings...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">HALF-HORSE</span>
+                <p>The creative drawing community</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://twitter.com/halfhorse_xyz" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://t.me/halfhorse_portal" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="https://discord.gg/halfhorse" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+        <p class="footer-copyright">&copy; 2025 HALF-HORSE. All rights reserved.</p>
+    </footer>
+
+    <!-- Floating $HORSE Coin Button -->
+    <a href="horsecoin.html" class="floating-coin" title="Buy $HORSE">
+        <i class="fas fa-horse-head"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

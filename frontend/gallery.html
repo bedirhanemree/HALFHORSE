@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Gallery - Gallery</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme-pumpfun.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html" class="logo-link">HALF-HORSE</a>
+            </div>
+            <nav class="main-navigation">
+                <a href="index.html" class="nav-link">Draw</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="horsecoin.html" class="nav-link">$HORSE</a>
+                <a href="rules.html" class="nav-link">Rules</a>
+            </nav>
+            <div class="user-actions">
+                <div class="user-info" id="userInfoContainer">
+                    <span id="usernameDisplay">Guest</span>
+                </div>
+                <nav class="auth-navigation" id="authNavigationContainer">
+                    <!-- Auth links will be dynamically added here by script.js -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="competition-banner-collapsible" id="competitionBannerCollapsible">
+        <div class="banner-header-clickable" id="bannerHeaderClickable" tabindex="0" role="button" aria-expanded="false"
+            aria-controls="bannerDetailsCollapsible">
+            <h3>🏆 Grand Art Challenge! $3550 Prize Pool! <i class="fas fa-chevron-down banner-chevron"></i></h3>
+        </div>
+        <div class="banner-details-collapsible" id="bannerDetailsCollapsible">
+            <div class="banner-content-wrapper">
+                <h2><i class="fas fa-trophy"></i> Grand Art Challenge! <i class="fas fa-trophy"></i></h2>
+                <p class="prize-pool">Total Prize Pool: $3550!</p>
+                <div class="prize-details">
+                    <ul>
+                        <li><strong>1st Place:</strong> $1000</li>
+                        <li><strong>2nd Place:</strong> $500</li>
+                        <li><strong>3rd Place:</strong> $250</li>
+                        <li><strong>4th - 20th Place:</strong> $100 each!</li>
+                    </ul>
+                </div>
+                <p class="competition-info">Most Likes Wins! Competition Ends: <strong
+                        id="competitionEndDate">Loading...</strong></p>
+                <div class="competition-countdown" id="competitionCountdownTimer">Loading countdown...</div>
+                <div class="competition-actions">
+                    <a href="index.html#drawingCanvas" class="primary-btn competition-action-btn cta-draw">
+                        <i class="fas fa-paint-brush"></i> Start Drawing Now!
+                    </a>
+                    <a href="leaderboard.html" class="secondary-btn competition-action-btn cta-leaderboard">
+                        <i class="fas fa-medal"></i> View Leaderboard
+                    </a>
+                    <a href="rules.html" class="tertiary-btn competition-action-btn cta-rules">
+                        <i class="fas fa-gavel"></i> View Competition Rules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="published-drawings">
+            <h2>All Drawings</h2>
+            <div class="filter-bar">
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="latest">
+                        <i class="fas fa-clock"></i> Latest
+                    </button>
+                    <button class="filter-btn" data-filter="popular">
+                        <i class="fas fa-fire"></i> Most Liked
+                    </button>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search drawings...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <div id="gallery" class="gallery-grid">
+                <div class="loading-indicator">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading drawings...</span>
+                </div>
+            </div>
+            <div class="pagination">
+                <button id="prevPageBtn" class="page-btn" disabled>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span id="pageInfo">Page 1</span>
+                <button id="nextPageBtn" class="page-btn">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawing View Modal -->
+    <div id="viewDrawingModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content view-drawing-modal">
+            <button class="modal-close-btn" id="closeViewModalBtn"><i class="fas fa-times"></i></button>
+
+            <div class="modal-header">
+                <h3 id="viewDrawingTitle"></h3>
+                <div class="creator-info">
+                    <img id="creatorAvatar" src="assets/default-avatar.png" alt="Creator Avatar">
+                    <span id="viewDrawingCreator"></span>
+                </div>
+            </div>
+
+            <div class="view-drawing-content">
+                <div class="drawing-image-container">
+                    <div class="drawing-frame">
+                        <img id="viewDrawingImage" src="" alt="Drawing">
+                    </div>
+                </div>
+
+                <div class="drawing-details">
+                    <div class="interaction-stats">
+                        <div class="stat-item">
+                            <button id="likeDrawingBtn" class="interaction-btn">
+                                <i class="far fa-heart"></i>
+                                <span>Like</span>
+                            </button>
+                            <span id="likeCount" class="stat-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <button id="shareDrawingBtn" class="interaction-btn">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                        <div class="stat-item">
+                            <button id="reportDrawingBtn" class="interaction-btn">
+                                <i class="fas fa-flag"></i>
+                                <span>Report</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="drawing-metadata">
+                        <div class="metadata-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="drawingDate">Loading date...</span>
+                        </div>
+                        <div class="metadata-item">
+                            <i class="fas fa-tags"></i>
+                            <span id="drawingModalTags">Loading tags...</span>
+                        </div>
+                    </div>
+
+                    <div class="comments-section">
+                        <h4><i class="fas fa-comments"></i> Comments</h4>
+                        <div id="commentsList" class="comments-list">
+                            <div class="no-comments">No comments yet.</div>
+                        </div>
+
+                        <div class="comment-form">
+                            <div class="form-avatar">
+                                <img id="userCommentAvatar" src="assets/default-avatar.png" alt="Your Avatar">
+                            </div>
+                            <div class="form-content">
+                                <textarea id="commentInput" class="comment-input"
+                                    placeholder="Write a comment..."></textarea>
+                                <div class="form-actions">
+                                    <div class="emoji-picker">
+                                        <button id="emojiPickerBtn" class="emoji-btn">
+                                            <i class="far fa-smile"></i>
+                                        </button>
+                                        <div id="emojiList" class="emoji-list">
+                                            <!-- Emojis will be loaded by JavaScript -->
+                                        </div>
+                                    </div>
+                                    <button id="submitCommentBtn" class="action-btn">
+                                        <i class="fas fa-paper-plane"></i> Send
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content share-modal">
+            <button class="modal-close-btn" id="closeShareBtn"><i class="fas fa-times"></i></button>
+            <h3>Share This Drawing</h3>
+
+            <div class="share-options">
+                <button class="share-btn" data-platform="twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn" data-platform="facebook">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" data-platform="telegram">
+                    <i class="fab fa-telegram"></i> Telegram
+                </button>
+            </div>
+
+            <div class="share-link">
+                <input type="text" id="shareLink" readonly>
+                <button id="copyLinkBtn"><i class="fas fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content report-modal">
+            <button class="modal-close-btn" id="closeReportBtn"><i class="fas fa-times"></i></button>
+            <h3>Report Content</h3>
+
+            <form id="reportForm" class="report-form">
+                <div class="form-group">
+                    <label for="reportReason">Reason for Report:</label>
+                    <select id="reportReason" required>
+                        <option value="">Select a reason</option>
+                        <option value="inappropriate">Inappropriate Content</option>
+                        <option value="copyright">Copyright Violation</option>
+                        <option value="offensive">Offensive</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportDescription">Description:</label>
+                    <textarea id="reportDescription" placeholder="Please provide details about your report"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancelReportBtn" class="secondary-btn">Cancel</button>
+                    <button type="submit" id="submitReportBtn" class="primary-btn">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">HALF-HORSE</span>
+                <p>The creative drawing community</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://twitter.com/halfhorse_xyz" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://t.me/halfhorse_portal" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="https://discord.gg/halfhorse" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+        <p class="footer-copyright">&copy; 2025 HALF-HORSE. All rights reserved.</p>
+    </footer>
+
+    <!-- Floating $HORSE Coin Button -->
+    <a href="horsecoin.html" class="floating-coin" title="Buy $HORSE">
+        <i class="fas fa-horse-head"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

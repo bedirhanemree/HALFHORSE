@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$HORSE Coin - Official Token of HALF-HORSE</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme-pumpfun.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Coming Soon Chart Placeholder */
+        .coming-soon-chart {
+            background: linear-gradient(135deg, rgba(15, 15, 25, 0.9) 0%, rgba(25, 25, 45, 0.9) 100%);
+            border: 2px dashed rgba(0, 255, 136, 0.3);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coming-soon-content {
+            max-width: 500px;
+        }
+
+        .coming-soon-icon {
+            font-size: 4rem;
+            color: #00ff88;
+            margin-bottom: 20px;
+            animation: rocketFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes rocketFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-15deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-15deg);
+            }
+        }
+
+        .coming-soon-content h3 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #00ff88, #00f0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .coming-soon-content p {
+            color: #a0a0b0;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .coming-soon-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .coming-soon-features span {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coming-soon-features span i {
+            font-size: 0.8rem;
+        }
+
+        /* Chart Section Styling */
+        .chart-section {
+            background: linear-gradient(135deg, rgba(20, 25, 40, 0.95) 0%, rgba(30, 35, 55, 0.95) 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-section h2 {
+            color: #00ff88;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-section h2 i {
+            color: #9945FF;
+        }
+
+        /* Contract Address Section - Improved */
+        .contract-address-section {
+            background: linear-gradient(135deg, rgba(20, 25, 40, 0.95) 0%, rgba(30, 35, 55, 0.95) 100%);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contract-address-section h2 {
+            color: #00ff88;
+            font-size: 1.5em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contract-address-section .ca-text {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #00ff88;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contract-address-section .ca-text:hover {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .contract-address-section .ca-text .fas,
+        .contract-address-section .ca-text .fa-spinner {
+            color: #FFD700;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .coming-soon-chart {
+                padding: 40px 20px;
+            }
+
+            .coming-soon-icon {
+                font-size: 3rem;
+            }
+
+            .coming-soon-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .coming-soon-features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html" class="logo-link">HALF-HORSE</a>
+            </div>
+            <nav class="main-navigation">
+                <a href="index.html" class="nav-link">Draw</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="horsecoin.html" class="nav-link">$HORSE</a>
+                <a href="rules.html" class="nav-link">Rules</a>
+            </nav>
+            <div class="user-actions">
+                <div class="user-info" id="userInfoContainer">
+                    <span id="usernameDisplay">Guest</span>
+                </div>
+                <nav class="auth-navigation" id="authNavigationContainer">
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container horsecoin-container">
+        <section class="horsecoin-hero">
+            <div class="hero-content">
+                <h1><i class="fas fa-horse-head" style="color: #FFD700;"></i> Welcome to $HORSE</h1>
+                <p class="subtitle">The official community and utility token for the HALF-HORSE creative platform.</p>
+                <a href="https://pump.fun" target="_blank" rel="noopener noreferrer" class="primary-btn hero-cta-btn">
+                    <i class="fas fa-rocket"></i> Launching on Pump.fun
+                </a>
+                <a href="https://knowyourmeme.com/memes/unfinished-horse-drawing-flaming-horse-rating" target="_blank"
+                    rel="noopener noreferrer" class="secondary-btn hero-cta-btn" style="margin-top: 15px;">
+                    <i class="fas fa-info-circle"></i> Know Your Meme
+                </a>
+            </div>
+        </section>
+
+        <section class="contract-address-section">
+            <h2><i class="fas fa-file-contract"></i> Contract Address (CA)</h2>
+            <div class="ca-text" id="contractAddress" title="Click to copy contract address">
+                Loading... <i class="fas fa-copy"></i>
+            </div>
+            <p style="font-size: 0.85em; color: #aaa;">Always verify the contract address on official channels before
+                trading.</p>
+        </section>
+        <section class="horsecoin-section" id="origin-story">
+            <h2><i class="fas fa-lightbulb"></i> The Genesis: Inspired by a Meme</h2>
+            <div class="meme-image-container">
+                <img src="assets/half-horse-meme.jpg"
+                    alt="The original unfinished horse drawing meme, showing a realistic horse rear and a crudely drawn front half."
+                    class="genesis-meme-image">
+            </div>
+            <p>The HALF-HORSE platform and $HORSE token draw inspiration from the "Unfinished Horse Drawing" meme. We
+                encourage collaborative creativity, where users complete a "half-finished" concept. $HORSE aims to
+                empower this community with rewards and utility. Learn more: <a
+                    href="https://knowyourmeme.com/memes/unfinished-horse-drawing-flaming-horse-rating" target="_blank"
+                    rel="noopener noreferrer">Know Your Meme</a></p>
+        </section>
+
+        <section class="chart-section" id="price-chart">
+            <h2><i class="fas fa-chart-line"></i> Live $HORSE Price Chart</h2>
+            <div class="coming-soon-chart">
+                <div class="coming-soon-content">
+                    <i class="fas fa-rocket coming-soon-icon"></i>
+                    <h3>Chart Coming Soon!</h3>
+                    <p>The $HORSE token hasn't launched yet. Once live, you'll see real-time price data here.</p>
+                    <div class="coming-soon-features">
+                        <span><i class="fas fa-check"></i> Real-time price updates</span>
+                        <span><i class="fas fa-check"></i> Trading volume data</span>
+                        <span><i class="fas fa-check"></i> Market cap tracking</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="horsecoin-section" id="about-horse">
+            <h2><i class="fas fa-palette"></i> About the $HORSE Token</h2>
+            <p>$HORSE is an integral part of the HALF-HORSE ecosystem, designed to boost engagement, reward artists, and
+                support platform development. It will unlock features like enhanced prize pools and exclusive content
+                for holders.</p>
+        </section>
+
+        <section class="horsecoin-section" id="fair-launch">
+            <h2><i class="fas fa-balance-scale"></i> Fair Launch on Pump.fun</h2>
+            <p>$HORSE will launch exclusively on <a href="https://pump.fun" target="_blank"
+                    rel="noopener noreferrer">pump.fun</a> for equitable distribution and community-driven growth. </p>
+            <div class="launch-details">
+                <p><strong>Launch Platform:</strong> <a href="https://pump.fun" target="_blank"
+                        rel="noopener noreferrer">Pump.fun</a></p>
+                <p><strong>Launch Date:</strong> To Be Announced. Follow our channels for updates.</p>
+                <p><strong>Ticker Symbol:</strong> $HORSE</p>
+                <p><strong>Network:</strong> Solana</p>
+            </div>
+        </section>
+
+        <section class="horsecoin-section" id="roadmap">
+            <h2><i class="fas fa-map-signs"></i> Project Roadmap: Key Milestones</h2>
+            <div class="roadmap-grid">
+                <div class="roadmap-card">
+                    <div class="roadmap-phase-icon"><i class="fas fa-flag-checkered"></i></div>
+                    <h3>Phase 1: Foundation & Launch</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> $HORSE token fair launch.</li>
+                        <li><i class="fas fa-bullhorn"></i> Initial community building.</li>
+                        <li><i class="fas fa-trophy"></i> $HORSE integration for prize pools.</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-phase-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Phase 2: Platform Enhancement</h3>
+                    <ul>
+                        <li><i class="fas fa-chart-line"></i> Post-launch liquidity pool.</li>
+                        <li><i class="fas fa-tools"></i> Exclusive features for $HORSE holders.</li>
+                        <li><i class="fas fa-users"></i> Community governance exploration.</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-phase-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+                    <h3>Phase 3: Ecosystem Growth</h3>
+                    <ul>
+                        <li><i class="fas fa-image"></i> NFT minting options for artworks.</li>
+                        <li><i class="fas fa-handshake"></i> Strategic partnerships.</li>
+                        <li><i class="fas fa-globe"></i> Continuous platform and $HORSE utility expansion.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="horsecoin-section" id="tokenomics">
+            <h2><i class="fas fa-coins"></i> Tokenomics Overview</h2>
+            <div class="tokenomics-details">
+                <p><strong>Total Supply:</strong> 1,000,000,000 $HORSE</p>
+                <p><strong>Initial Liquidity:</strong> 100% burned via Pump.fun.</p>
+                <p><strong>Transaction Fees:</strong> 0% Buy / 0% Sell.</p>
+                <p><strong>Primary Utility:</strong> Enhancing user experience, rewarding participation, funding
+                    development.</p>
+            </div>
+        </section>
+
+        <section class="horsecoin-section" id="how-to-buy">
+            <h2><i class="fas fa-wallet"></i> Acquiring $HORSE</h2>
+            <ol class="how-to-buy-steps">
+                <li><strong>Wallet Setup:</strong> Solana-compatible wallet (Phantom, Solflare).</li>
+                <li><strong>Fund Wallet:</strong> Transfer Solana (SOL) to your wallet.</li>
+                <li><strong>Visit Pump.fun:</strong> Go to <a href="https://pump.fun" target="_blank"
+                        rel="noopener noreferrer">Pump.fun</a> at launch.</li>
+                <li><strong>Locate $HORSE:</strong> Use the official contract address (to be provided) to find $HORSE.
+                </li>
+                <li><strong>Swap SOL for $HORSE:</strong> Connect wallet and execute swap.</li>
+            </ol>
+            <p><em>Disclaimer: Cryptocurrency investments are subject to market risk. DYOR. Not financial advice.</em>
+            </p>
+        </section>
+
+        <section class="horsecoin-section" id="community">
+            <h2><i class="fas fa-users"></i> Connect with the Community</h2>
+            <p>Stay updated on $HORSE token launch and platform news:</p>
+            <div class="social-links-horsecoin">
+                <a href="https://twitter.com/halfhorse_xyz" target="_blank" rel="noopener noreferrer"
+                    class="social-link twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://t.me/halfhorse_portal" target="_blank" rel="noopener noreferrer"
+                    class="social-link telegram">
+                    <i class="fab fa-telegram-plane"></i> Telegram
+                </a>
+                <a href="https://discord.gg/halfhorse" target="_blank" rel="noopener noreferrer"
+                    class="social-link discord">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">HALF-HORSE</span>
+                <p>The creative drawing community</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://twitter.com/halfhorse_xyz" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://t.me/halfhorse_portal" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="https://discord.gg/halfhorse" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+        <p class="footer-copyright">&copy; 2025 HALF-HORSE. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // CONTRACT ADDRESS KOPYALAMA İŞLEVİ (script.js içine de taşınabilir)
+        document.addEventListener('DOMContentLoaded', function () {
+            const contractAddressEl = document.getElementById('contractAddress');
+            const contractAddress = 'YOUR_HORSE_COIN_CONTRACT_ADDRESS_HERE'; // BURAYI GERÇEK SÖZLEŞME ADRESİ İLE DEĞİŞTİRİN
+
+            if (contractAddressEl) {
+                if (contractAddress === 'YOUR_HORSE_COIN_CONTRACT_ADDRESS_HERE' || !contractAddress) {
+                    contractAddressEl.innerHTML = 'Address pending... <i class="fas fa-spinner fa-spin"></i>';
+                    contractAddressEl.style.cursor = 'default';
+                    contractAddressEl.title = 'Contract address will be available soon.';
+                } else {
+                    contractAddressEl.innerHTML = `${contractAddress} <i class="fas fa-copy"></i>`;
+                    contractAddressEl.addEventListener('click', () => {
+                        navigator.clipboard.writeText(contractAddress)
+                            .then(() => {
+                                if (typeof window.showNotification === 'function') {
+                                    window.showNotification('Contract address copied to clipboard!', 'success');
+                                } else {
+                                    alert('Contract address copied!');
+                                }
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy contract address:', err);
+                                if (typeof window.showNotification === 'function') {
+                                    window.showNotification('Failed to copy address.', 'error');
+                                }
+                            });
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

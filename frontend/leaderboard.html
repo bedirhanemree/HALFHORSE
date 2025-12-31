@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Gallery - Leaderboard</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme-pumpfun.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Embedded styles for leaderboard.html podium enhancement */
+        .leaderboard-podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            /* Key for vertical hierarchy with translateY */
+            margin-bottom: 50px;
+            padding-top: 40px;
+            /* Extra space for the lifted 1st place */
+            gap: 15px;
+            /* Adjusted gap */
+            min-height: 450px;
+            /* Increased to accommodate larger cards and shifts */
+        }
+
+        .podium-spot {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #1A1F2E;
+            border-radius: 18px;
+            /* Slightly larger radius */
+            padding: 25px;
+            /* More padding */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            transition: all 0.3s ease-in-out;
+            width: 270px;
+            /* Base width increased */
+            min-height: 360px;
+            /* Base min-height increased */
+            border: 2px solid transparent;
+            /* Base border */
+        }
+
+        .podium-spot:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+        }
+
+        #first-place {
+            width: 310px;
+            /* Largest card */
+            min-height: 420px;
+            /* Tallest card */
+            z-index: 3;
+            /* Ensure it's on top */
+            border-color: #FFD700;
+            /* Gold border */
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            transform: translateY(-30px);
+            /* Lift 1st place higher */
+        }
+
+        #first-place .medal {
+            font-size: 38px;
+            /* Larger medal icon */
+            width: 65px;
+            height: 65px;
+            top: -30px;
+            /* Adjust medal position */
+        }
+
+        #first-place .podium-avatar {
+            width: 105px;
+            height: 105px;
+        }
+
+        #first-place .podium-drawing {
+            height: 170px;
+        }
+
+        #first-place .podium-info h3 {
+            font-size: 1.3em;
+        }
+
+
+        #second-place {
+            width: 290px;
+            /* Intermediate size */
+            min-height: 390px;
+            z-index: 2;
+            border-color: #C0C0C0;
+            /* Silver border */
+            box-shadow: 0 0 25px rgba(192, 192, 192, 0.5);
+            transform: translateY(-15px);
+            /* Lift 2nd place slightly */
+        }
+
+        #second-place .medal {
+            font-size: 34px;
+            width: 60px;
+            height: 60px;
+            top: -28px;
+        }
+
+        #second-place .podium-avatar {
+            width: 95px;
+            height: 95px;
+        }
+
+        #second-place .podium-drawing {
+            height: 155px;
+        }
+
+        #second-place .podium-info h3 {
+            font-size: 1.2em;
+        }
+
+
+        #third-place {
+            width: 270px;
+            /* Uses the new base .podium-spot width */
+            min-height: 360px;
+            /* Uses the new base .podium-spot min-height */
+            z-index: 1;
+            border-color: #CD7F32;
+            /* Bronze border */
+            box-shadow: 0 0 20px rgba(205, 127, 50, 0.5);
+            /* No translateY, stays at the bottom alignment relative to others */
+        }
+
+        #third-place .medal {
+            font-size: 32px;
+            width: 58px;
+            height: 58px;
+            top: -26px;
+        }
+
+        #third-place .podium-avatar {
+            width: 90px;
+            height: 90px;
+        }
+
+        #third-place .podium-drawing {
+            height: 145px;
+        }
+
+        #third-place .podium-info h3 {
+            font-size: 1.15em;
+        }
+
+
+        /* Adjust child elements within podium spots for new sizes */
+        .podium-avatar {
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 18px;
+            /* Increased margin */
+            border: 3px solid #9945FF;
+            flex-shrink: 0;
+        }
+
+        .podium-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .podium-drawing {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            /* Slightly larger radius */
+            margin-bottom: 18px;
+            /* Increased margin */
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid rgba(153, 69, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .podium-drawing:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .podium-drawing img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .podium-info {
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .podium-info h3 {
+            /* Name */
+            font-weight: 700;
+            margin: 0 0 7px 0;
+            /* Increased margin */
+            color: #FFFFFF;
+        }
+
+        .podium-likes {
+            color: #FF6B6B;
+            font-weight: 600;
+            font-size: 1.3em;
+            margin-bottom: 7px;
+        }
+
+        /* Larger likes */
+        .podium-title {
+            font-size: 1.05em;
+            color: #14F195;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+
+        /* Responsive adjustments for podium with new sizes */
+        @media (max-width: 1100px) {
+            .leaderboard-podium {
+                gap: 10px;
+                min-height: 420px;
+            }
+
+            .podium-spot {
+                width: 240px;
+                min-height: 330px;
+                padding: 20px;
+            }
+
+            #first-place {
+                width: 270px;
+                min-height: 380px;
+                transform: translateY(-25px);
+            }
+
+            #second-place {
+                width: 255px;
+                min-height: 355px;
+                transform: translateY(-10px);
+            }
+
+            #third-place {
+                width: 240px;
+                min-height: 330px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .leaderboard-podium {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+                /* Increased gap for stacked items */
+                min-height: auto;
+                padding-top: 20px;
+            }
+
+            .podium-spot,
+            #first-place,
+            #second-place,
+            #third-place {
+                /* ORDER'lar burada devreye giriyor, 1. sırayı en üstte göstermek için */
+                width: clamp(300px, 85%, 380px) !important;
+                /* Wider in column layout */
+                transform: translateY(0) !important;
+                margin-bottom: 0;
+                /* Reset specific margins if any, rely on gap */
+                min-height: auto;
+                /* Let content define height in column */
+            }
+
+            /* ORDER'lar burada devreye giriyor, 1. sırayı en üstte göstermek için */
+            #first-place {
+                order: 1;
+            }
+
+            #second-place {
+                order: 2;
+            }
+
+            #third-place {
+                order: 3;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .podium-spot,
+            #first-place,
+            #second-place,
+            #third-place {
+                width: clamp(260px, 90%, 340px) !important;
+            }
+
+            .podium-avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            #first-place .podium-avatar {
+                width: 90px;
+                height: 90px;
+            }
+
+            .podium-drawing {
+                height: 130px;
+            }
+
+            #first-place .podium-drawing {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html" class="logo-link">HALF-HORSE</a>
+            </div>
+            <nav class="main-navigation">
+                <a href="index.html" class="nav-link">Draw</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="horsecoin.html" class="nav-link">$HORSE</a>
+                <a href="rules.html" class="nav-link">Rules</a>
+            </nav>
+            <div class="user-actions">
+                <div class="user-info" id="userInfoContainer">
+                    <span id="usernameDisplay">Guest</span>
+                </div>
+                <nav class="auth-navigation" id="authNavigationContainer">
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="leaderboard-container">
+            <h2>Grand Art Challenge Standings</h2>
+            <div class="leaderboard-description">
+                <p>The most liked drawings from our talented community! Winners announced after the competition ends.
+                </p>
+                <div class="leaderboard-countdown" id="competitionLeaderboardCountdown">Loading countdown...</div>
+            </div>
+
+            <div class="leaderboard-podium">
+                <div class="podium-spot" id="first-place">
+                    <div class="medal gold">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="podium-avatar">
+                        <img src="assets/default-avatar.png" alt="First Place Avatar" id="gold-avatar">
+                    </div>
+                    <div class="podium-drawing">
+                        <img src="" alt="First Place Drawing" id="gold-drawing">
+                    </div>
+                    <div class="podium-info">
+                        <h3 id="gold-name">- <span class="prize-amount gold-prize-amount" id="gold-prize-amount">($1000
+                                Prize)</span></h3>
+                        <div class="podium-likes">
+                            <i class="fas fa-heart"></i>
+                            <span id="gold-likes">0</span>
+                        </div>
+                        <div class="podium-title" id="gold-title">-</div>
+                    </div>
+                </div>
+
+                <div class="podium-spot" id="second-place">
+                    <div class="medal silver">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="podium-avatar">
+                        <img src="assets/default-avatar.png" alt="Second Place Avatar" id="silver-avatar">
+                    </div>
+                    <div class="podium-drawing">
+                        <img src="" alt="Second Place Drawing" id="silver-drawing">
+                    </div>
+                    <div class="podium-info">
+                        <h3 id="silver-name">- <span class="prize-amount silver-prize-amount"
+                                id="silver-prize-amount">($500 Prize)</span></h3>
+                        <div class="podium-likes">
+                            <i class="fas fa-heart"></i>
+                            <span id="silver-likes">0</span>
+                        </div>
+                        <div class="podium-title" id="silver-title">-</div>
+                    </div>
+                </div>
+
+                <div class="podium-spot" id="third-place">
+                    <div class="medal bronze">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="podium-avatar">
+                        <img src="assets/default-avatar.png" alt="Third Place Avatar" id="bronze-avatar">
+                    </div>
+                    <div class="podium-drawing">
+                        <img src="" alt="Third Place Drawing" id="bronze-drawing">
+                    </div>
+                    <div class="podium-info">
+                        <h3 id="bronze-name">- <span class="prize-amount bronze-prize-amount"
+                                id="bronze-prize-amount">($250 Prize)</span></h3>
+                        <div class="podium-likes">
+                            <i class="fas fa-heart"></i>
+                            <span id="bronze-likes">0</span>
+                        </div>
+                        <div class="podium-title" id="bronze-title">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard-list">
+                <div class="leaderboard-header">
+                    <div class="rank-col">Rank</div>
+                    <div class="drawing-col">Drawing</div>
+                    <div class="artist-col">Artist</div>
+                    <div class="title-col">Title</div>
+                    <div class="likes-col">Likes</div>
+                </div>
+
+                <div id="leaderboardEntries" class="leaderboard-entries">
+                    <div class="loading-indicator skeleton-loading">
+                        <i class="fas fa-trophy" style="opacity: 0.3; font-size: 2em; margin-bottom: 10px;"></i>
+                        <span>Loading leaderboard...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">HALF-HORSE</span>
+                <p>The creative drawing community</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://twitter.com/halfhorse_xyz" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://t.me/halfhorse_portal" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="https://discord.gg/halfhorse" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+        <p class="footer-copyright">&copy; 2025 HALF-HORSE. All rights reserved.</p>
+    </footer>
+
+    <!-- Floating $HORSE Coin Button -->
+    <a href="horsecoin.html" class="floating-coin" title="Buy $HORSE">
+        <i class="fas fa-horse-head"></i>
+    </a>
+
+    <div id="viewDrawingModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content view-drawing-modal">
+            <button class="modal-close-btn" id="closeViewModalBtn"><i class="fas fa-times"></i></button>
+
+            <div class="modal-header">
+                <h3 id="viewDrawingTitle"></h3>
+                <div class="creator-info">
+                    <img id="creatorAvatar" src="assets/default-avatar.png" alt="Creator Avatar">
+                    <span id="viewDrawingCreator"></span>
+                </div>
+            </div>
+
+            <div class="view-drawing-content">
+                <div class="drawing-image-container">
+                    <div class="drawing-frame">
+                        <img id="viewDrawingImage" src="" alt="Drawing">
+                    </div>
+                </div>
+
+                <div class="drawing-details">
+                    <div class="interaction-stats">
+                        <div class="stat-item">
+                            <button id="likeDrawingBtn" class="interaction-btn">
+                                <i class="far fa-heart"></i>
+                                <span>Like</span>
+                            </button>
+                            <span id="likeCount" class="stat-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <button id="shareDrawingBtn" class="interaction-btn">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                        <div class="stat-item">
+                            <button id="reportDrawingBtn" class="interaction-btn">
+                                <i class="fas fa-flag"></i>
+                                <span>Report</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="drawing-metadata">
+                        <div class="metadata-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="drawingDate">Loading date...</span>
+                        </div>
+                        <div class="metadata-item">
+                            <i class="fas fa-tags"></i>
+                            <span id="drawingModalTags">Loading tags...</span>
+                        </div>
+                    </div>
+
+                    <div class="comments-section">
+                        <h4><i class="fas fa-comments"></i> Comments</h4>
+                        <div id="commentsList" class="comments-list">
+                            <div class="no-comments">No comments yet.</div>
+                        </div>
+
+                        <div class="comment-form">
+                            <div class="form-avatar">
+                                <img id="userCommentAvatar" src="assets/default-avatar.png" alt="Your Avatar">
+                            </div>
+                            <div class="form-content">
+                                <textarea id="commentInput" class="comment-input"
+                                    placeholder="Write a comment..."></textarea>
+                                <div class="form-actions">
+                                    <div class="emoji-picker">
+                                        <button id="emojiPickerBtn" class="emoji-btn">
+                                            <i class="far fa-smile"></i>
+                                        </button>
+                                        <div id="emojiList" class="emoji-list">
+                                        </div>
+                                    </div>
+                                    <button id="submitCommentBtn" class="action-btn">
+                                        <i class="fas fa-paper-plane"></i> Send
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content share-modal">
+            <button class="modal-close-btn" id="closeShareBtn"><i class="fas fa-times"></i></button>
+            <h3>Share This Drawing</h3>
+
+            <div class="share-options">
+                <button class="share-btn" data-platform="twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn" data-platform="facebook">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" data-platform="telegram">
+                    <i class="fab fa-telegram"></i> Telegram
+                </button>
+            </div>
+
+            <div class="share-link">
+                <input type="text" id="shareLink" readonly>
+                <button id="copyLinkBtn"><i class="fas fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportModal" class="modal improved-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content report-modal">
+            <button class="modal-close-btn" id="closeReportBtn"><i class="fas fa-times"></i></button>
+            <h3>Report Content</h3>
+
+            <form id="reportForm" class="report-form">
+                <div class="form-group">
+                    <label for="reportReason">Reason for Report:</label>
+                    <select id="reportReason" required>
+                        <option value="">Select a reason</option>
+                        <option value="inappropriate">Inappropriate Content</option>
+                        <option value="copyright">Copyright Violation</option>
+                        <option value="offensive">Offensive</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportDescription">Description:</label>
+                    <textarea id="reportDescription" placeholder="Please provide details about your report"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancelReportBtn" class="secondary-btn">Cancel</button>
+                    <button type="submit" id="submitReportBtn" class="primary-btn">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="leaderboard.js"></script>
+</body>
+
+</html>
